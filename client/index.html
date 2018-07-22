@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cursor Room</title>
+    <!-- <script src="client.js"></script> -->
+</head>
+<body>
+    <p>Hi there. Check console to see if sockets work</p>
+    <p id="messages"></p>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var messageArray = [];
+        document.getElementById('messages').innerHTML = messageArray;
+        
+        var socket = io();
+        socket.on('notify', function (data) {
+            document.getElementById('messages').innerHTML = messageArray;
+            messageArray.push(data);
+            console.log(data)
+            socket.emit('message', "'client'", '"hi"');
+        });
+    </script>
+</body>
+</html>

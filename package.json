@@ -1,0 +1,17 @@
+{
+  "name": "cursor-room",
+  "version": "1.0.0",
+  "description": "Cursor room via Websocket",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Milos Lazarevic",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3",
+    "socket.io": "^2.1.1",
+    "ws": "^6.0.0"
+  }
+}
