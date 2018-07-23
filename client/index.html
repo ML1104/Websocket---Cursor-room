@@ -7,22 +7,53 @@
     <title>Cursor Room</title>
     <!-- <script src="client.js"></script> -->
 </head>
-<body>
-    <p>Hi there. Check console to see if sockets work</p>
-    <p id="messages"></p>
+<body @mousemove="cursorLocation">
+    <div id="app">
+        <p>Hi there. Check console to see if sockets work</p>
+        <img src="https://png.icons8.com/wired/2x/cursor.png" alt="cursor" class="cursor" :style="{ left: xAxis + 'px', top: yAxis + 'px' }">
+    </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+
     <script>
-        var messageArray = [];
-        document.getElementById('messages').innerHTML = messageArray;
-        
-        var socket = io();
-        socket.on('notify', function (data) {
-            document.getElementById('messages').innerHTML = messageArray;
-            messageArray.push(data);
-            console.log(data)
-            socket.emit('message', "'client'", '"hi"');
-        });
+        var app = new Vue ({
+            el: '#app',
+            data: {
+                socket: io(),
+                yAxis: '',
+                xAxis: '',
+                
+            },
+            
+            methods: {
+                cursorLocation(e) {
+                    this.socket.emit('locate', {
+                        xAxis: e.pageX, yAxis: e.pageY 
+                    });
+                }
+            },
+            
+            mounted() {
+                this.socket.on('notify', (data) => {
+                    console.log(data);
+                    this.socket.emit('message', "'client'", '"hi"');
+                });
+                
+                this.socket.on('cursorAction', (data) => {
+                    console.log(data.coord);
+                    this.xAxis = data.coord.x;
+                    this.yAxis = data.coord.y;
+                });
+            },
+        })
     </script>
+    
+    <style>
+        .cursor {
+            width: 30px;
+            position: absolute;
+        }
+    </style>
 </body>
 </html>

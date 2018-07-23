@@ -13,9 +13,9 @@ app.get('/', function(req, res){
 
 
 io.on('connection', function(socket) {
-    console.log('a new client is here!');
+  console.log('a new client is here!');
     
-    socket.emit('notify', {'message': "Connected to server"});
+  socket.emit('notify', { message : 'Connected to server'});
 
 	socket.on('disconnect', function() {
 		console.log('User has left. :(');
@@ -24,5 +24,9 @@ io.on('connection', function(socket) {
 
 	socket.on('message', function(from, msg) {
 		console.log('You have received a message from ', from, ': ', msg );
-	});
+  });
+  
+  socket.on('locate', function(data) {
+    socket.broadcast.emit('cursorAction', { session_id: socket.id, coord: data });
+  })
 });

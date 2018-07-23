@@ -1,5 +1,5 @@
 # Websocket---Cursor-room
-Display clients' cursors with socket.io
+Display clients' cursors with socket.io attempt
 
 ## Usage Guide 
 
